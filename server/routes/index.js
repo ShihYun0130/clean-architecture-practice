@@ -9,6 +9,6 @@ router.get('/birthdayGreeting', BirthdayGreetingController.greeting);
 router.post('/profile', ProfileController.createProfile);
 
 // version 2
-router.get('/birthdayGreetingV2', BirthdayGreetingController.customizedGreeting)
+router.get('/v2/birthdayGreeting', BirthdayGreetingController.customizedGreeting)
 
 module.exports = router;

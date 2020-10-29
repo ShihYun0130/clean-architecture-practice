@@ -1,4 +1,4 @@
-const CustomizedBirthdayGreetingEntity = require('../entity/customizedBirthdayGreetingEntity')
+const CustomizedProfileEntity = require('../entity/customizedProfileEntity')
 
 module.exports = class ProfileRepository {
   constructor(profile) {
@@ -17,13 +17,13 @@ module.exports = class ProfileRepository {
     return profileId
   }
 
-  async getByCurrentDate() {
+  async getByCurrentDate(date = new Date()) {
     const birthdayProfiles = await this._profile.aggregate([{
       "$project": {
         "first_name": 1,
         "date_of_birth": {
           "$dateFromParts": {
-            'year': { "$year": new Date() },
+            'year': { "$year": date },
             'month': { "$month": '$date_of_birth' },
             'day': { "$dayOfMonth": '$date_of_birth' }
           }
@@ -33,8 +33,8 @@ module.exports = class ProfileRepository {
       "$match": {
         "$expr": {
           "$and": [
-            { "$eq": [{ "$dayOfMonth": '$date_of_birth' }, { "$dayOfMonth": new Date() }] },
-            { "$eq": [{ "$month": '$date_of_birth' }, { "$month": new Date() }] },
+            { "$eq": [{ "$dayOfMonth": '$date_of_birth' }, { "$dayOfMonth": date }] },
+            { "$eq": [{ "$month": '$date_of_birth' }, { "$month": date }] },
           ],
         },
       }
@@ -45,7 +45,7 @@ module.exports = class ProfileRepository {
 
   async getByCurrentDateAndGender() {
     const birthdayProfiles = await this.getByCurrentDate()
-    const customizedMessages = birthdayProfiles.map(profile => new CustomizedBirthdayGreetingEntity(profile))
+    const customizedMessages = birthdayProfiles.map(profile => new CustomizedProfileEntity(profile))
     console.log('customizedMessages:', customizedMessages)
     return customizedMessages
   }

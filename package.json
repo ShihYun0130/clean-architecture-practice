@@ -6,7 +6,7 @@
     "start": "server/index.js",
     "devstart": "nodemon server/index.js",
     "dev": "DEBUG=birthday-greeting:* npm run devstart",
-    "test": "jest",
+    "test": "jest **/*.test.js",
     "cypress:open": "cypress open"
   },
   "dependencies": {

@@ -1,4 +1,4 @@
-const CustomizedBirthdayGreetingEntity = require('../server/entity/customizedBirthdayGreetingEntity')
+const CustomizedProfileEntity = require('../server/entity/customizedProfileEntity')
 
 describe('Given a profile,', () => {
   describe('When the gender of the profile is male,', () => {
@@ -8,9 +8,9 @@ describe('Given a profile,', () => {
         last_name: 'Wen',
         gender: 'male'
       }
-      const customizedBirthdayGreetingEntity = new CustomizedBirthdayGreetingEntity(maleProfile);
-      const discountOfMaleProfile = customizedBirthdayGreetingEntity.getDiscountByGender();
-      const recommendationOfMaleProfile = customizedBirthdayGreetingEntity.getRecommendedItemsByGender();
+      const customizedProfileEntity = new CustomizedProfileEntity(maleProfile);
+      const discountOfMaleProfile = customizedProfileEntity.getDiscountByGender();
+      const recommendationOfMaleProfile = customizedProfileEntity.getRecommendedItemsByGender();
       expect(discountOfMaleProfile).toBe('20%');
       expect(recommendationOfMaleProfile).toBe('White Wine, iPhone X');
     })
@@ -23,9 +23,9 @@ describe('Given a profile,', () => {
         last_name: 'Lin',
         gender: 'female'
       }
-      const customizedBirthdayGreetingEntity = new CustomizedBirthdayGreetingEntity(femaleProfile);
-      const discountOfFemaleProfile = customizedBirthdayGreetingEntity.getDiscountByGender();
-      const recommendationOfFemaleProfile = customizedBirthdayGreetingEntity.getRecommendedItemsByGender();
+      const customizedProfileEntity = new CustomizedProfileEntity(femaleProfile);
+      const discountOfFemaleProfile = customizedProfileEntity.getDiscountByGender();
+      const recommendationOfFemaleProfile = customizedProfileEntity.getRecommendedItemsByGender();
       expect(discountOfFemaleProfile).toBe('50%');
       expect(recommendationOfFemaleProfile).toBe('Cosmetic, LV Handbags');
     })

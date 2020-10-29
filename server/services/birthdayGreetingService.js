@@ -1,5 +1,7 @@
 const BirthdayGreetingView = require('../viewModel/birthdayGreetingView');
 const CustomizedBirthdayGreetingView = require('../viewModel/customizedBirthdayGreetingView');
+const MessageEntity = require('../entity/messageEntity');
+const CustomizedMessageEntity = require('../entity/customizedMessageEntity');
 
 module.exports = class BirthdayGreetingService {
   constructor({ profileRepository }) {
@@ -8,20 +10,16 @@ module.exports = class BirthdayGreetingService {
 
   async greeting() {
     const birthdayProfileList = await this._profileRepository.getByCurrentDate();
-    const birthdayGreetingView = birthdayProfileList.map(birthdayProfile => new BirthdayGreetingView(birthdayProfile));
+    const greetingMessages = birthdayProfileList.map(profile => new MessageEntity(profile))
+    const birthdayGreetingView = greetingMessages.map(message => new BirthdayGreetingView(message));
     return birthdayGreetingView
   }
 
   async customizedGreetingByGender() {
     const birthdayProfiles = await this._profileRepository.getByCurrentDateAndGender();
-    let customizedMessages = [];
-    birthdayProfiles.forEach(profile => {
-      customizedMessages.push({
-        firstName: profile.firstName,
-        discount: profile.getDiscountByGender(),
-        recommendedItems: profile.getRecommendedItemsByGender()
-      })
-    })
+    const customizedMessages = birthdayProfiles.map(profile =>
+      new CustomizedMessageEntity(profile)
+    )
     console.log('customizedMessageData:', customizedMessages)
     const birthdayGreetingView = customizedMessages.map(message => new CustomizedBirthdayGreetingView(message));
     return birthdayGreetingView

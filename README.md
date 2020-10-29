@@ -11,4 +11,7 @@ router.get('/birthdayGreeting', BirthdayGreetingController.greeting)
 
 #### Version 2: Tailer-made Message for different gender
 ##### APIs
-
+* Get birthday greeting messages V2:
+```
+router.get('/v2/birthdayGreetingV2', BirthdayGreetingController.customizedGreeting)
+```
